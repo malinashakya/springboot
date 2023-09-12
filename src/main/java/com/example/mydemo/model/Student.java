@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Student {
     @Id
     @SequenceGenerator(
-            name="student_sequence",
+            name = "student_sequence",
             sequenceName = "student_sequence",
             allocationSize = 1
     )
