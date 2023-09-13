@@ -1,18 +1,24 @@
 package com.example.mydemo.service;
 
+import com.example.mydemo.dto.requestDto.StudentRequestDto;
+import com.example.mydemo.dto.responseDto.StudentResponseDto;
 import com.example.mydemo.model.Student;
 
 import java.util.List;
 
 public interface StudentService {
-    Student addUser(Student student);
+    Student addUser(StudentRequestDto studentRequestDto);
 
-    List<Student> getAllStudents();
+    //to get all the students
+    List<StudentResponseDto> getAllStudents();
 
+    //to get info about information by id
     Student getStudentbyId(Long id);
 
-    String updateStudent(Long id, Student student);
+    //to update the info of the students
+    String updateStudent(Long id, StudentRequestDto studentRequestDto);
 
+    //to delete the info about the student
     String deleteStudent(Long id);
 }
 

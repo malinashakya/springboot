@@ -1,10 +1,13 @@
 package com.example.mydemo.service;
 
+import com.example.mydemo.dto.requestDto.StudentRequestDto;
+import com.example.mydemo.dto.responseDto.StudentResponseDto;
 import com.example.mydemo.model.Student;
 import com.example.mydemo.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,14 +16,35 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Override
-    public Student addUser(Student student) {
+    public Student addUser(StudentRequestDto studentRequestDto) {
+   //We can use Mapper as well for next two lines
+    Student student=new Student();
+    student.setName(studentRequestDto.getName());
 
         return studentRepository.save(student);
     }
 
     @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentResponseDto> getAllStudents()
+    {
+        List<Student> students=studentRepository.findAll();
+
+        List<StudentResponseDto> studentResponseDto= new ArrayList<>();
+
+        for(Student student:students)
+        {
+            StudentResponseDto responseDto = new StudentResponseDto();
+            //setting student details in the response dto
+//            responseDto.setName(student.getName());
+            responseDto.setName(student.getName());
+            //add data to the dto list
+            studentResponseDto.add(responseDto);
+
+
+        }
+
+return studentResponseDto;
+//        return studentRepository.findAll();
     }
 
     @Override
@@ -29,10 +53,10 @@ public class StudentServiceImpl implements StudentService {
                 ("Student does not exist by given id" + id));
     }
 
-    public String updateStudent(Long id, Student student) {
+    public String updateStudent(Long id, StudentRequestDto studentrequestDto) {
         Student existingStudent = studentRepository.findById(id).
                 orElseThrow(() -> new RuntimeException("student not found"));
-        existingStudent.setName(student.getName());
+        existingStudent.setName(studentrequestDto.getName());
         studentRepository.save(existingStudent);
         return "Student updated successfully";
     }
