@@ -13,7 +13,7 @@ public interface StudentService {
     List<StudentResponseDto> getAllStudents();
 
     //to get info about information by id
-    Student getStudentbyId(Long id);
+    StudentResponseDto getStudentbyId(Long id);
 
     //to update the info of the students
     String updateStudent(Long id, StudentRequestDto studentRequestDto);

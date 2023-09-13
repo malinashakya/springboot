@@ -48,9 +48,19 @@ return studentResponseDto;
     }
 
     @Override
-    public Student getStudentbyId(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException
+//    public Student getStudentbyId(Long id) {
+//        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException
+//                ("Student does not exist by given id" + id));
+//    }
+
+    // Using Dto
+    public StudentResponseDto getStudentbyId(Long id) {
+      Student student= studentRepository.findById(id).orElseThrow(() -> new RuntimeException
                 ("Student does not exist by given id" + id));
+      StudentResponseDto response=new StudentResponseDto();
+      //setting student details in the response dto
+        response.setName(student.getName());
+        return response;
     }
 
     public String updateStudent(Long id, StudentRequestDto studentrequestDto) {
